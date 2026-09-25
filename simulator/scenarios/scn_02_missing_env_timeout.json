@@ -1,0 +1,16 @@
+﻿{
+  "scenario_id": "SCN-002",
+  "title": "Auth Service Missing Environment Variable Timeout",
+  "service": "auth-service",
+  "severity": "P1",
+  "error_rate": 0.42,
+  "raw_logs": "[2026-09-24T11:02:11Z] ERROR auth_service.jwt: KeyError: 'JWT_VERIFY_TIMEOUT'\n[2026-09-24T11:02:12Z] CRITICAL auth_service.handler: Unhandled exception during token validation: 'JWT_VERIFY_TIMEOUT'\n[2026-09-24T11:02:15Z] ERROR auth_service.api: HTTP 500 Internal Server Error on /v1/auth/verify",
+  "metadata_payload": {
+    "recent_commit": "c49a102",
+    "deployment_version": "v1.9.0"
+  },
+  "ground_truth": {
+    "expected_cause_keywords": ["JWT_VERIFY_TIMEOUT", "KeyError", "environment variable"],
+    "target_service": "auth-service"
+  }
+}

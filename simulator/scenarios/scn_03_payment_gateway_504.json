@@ -1,0 +1,16 @@
+﻿{
+  "scenario_id": "SCN-003",
+  "title": "Payment Service Upstream Gateway 504 Timeout",
+  "service": "payment-service",
+  "severity": "P2",
+  "error_rate": 0.25,
+  "raw_logs": "[2026-09-24T11:15:30Z] ERROR payment_service.client: httpx.ReadTimeout: Upstream stripe-mock gateway did not respond within 5000ms\n[2026-09-24T11:15:32Z] WARN payment_service.retry: Retry attempt 3/3 exhausted for charge_id=chg_99182\n[2026-09-24T11:15:35Z] ERROR payment_service.router: Returning HTTP 504 Gateway Timeout",
+  "metadata_payload": {
+    "recent_commit": "a11d440",
+    "deployment_version": "v3.1.2"
+  },
+  "ground_truth": {
+    "expected_cause_keywords": ["ReadTimeout", "Upstream", "504", "gateway"],
+    "target_service": "payment-service"
+  }
+}

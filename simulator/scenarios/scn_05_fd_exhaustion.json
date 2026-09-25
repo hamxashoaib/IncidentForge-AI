@@ -1,0 +1,16 @@
+﻿{
+  "scenario_id": "SCN-005",
+  "title": "Notification Service File Descriptor Starvation",
+  "service": "notification-service",
+  "severity": "P2",
+  "error_rate": 0.18,
+  "raw_logs": "[2026-09-24T11:45:10Z] ERROR notification.worker: OSError: [Errno 24] Too many open files\n[2026-09-24T11:45:12Z] CRITICAL notification.socket: Cannot bind new TCP socket for webhook dispatcher",
+  "metadata_payload": {
+    "recent_commit": "771e89b",
+    "deployment_version": "v0.8.4"
+  },
+  "ground_truth": {
+    "expected_cause_keywords": ["Too many open files", "Errno 24", "socket"],
+    "target_service": "notification-service"
+  }
+}

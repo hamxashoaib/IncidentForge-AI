@@ -1,0 +1,16 @@
+﻿{
+  "scenario_id": "SCN-004",
+  "title": "Inventory Service Schema Drift Column Missing",
+  "service": "inventory-service",
+  "severity": "P1",
+  "error_rate": 0.55,
+  "raw_logs": "[2026-09-24T11:30:01Z] ERROR inventory.db: psycopg2.errors.UndefinedColumn: column item_sku_v2 of relation inventory_items does not exist\n[2026-09-24T11:30:04Z] CRITICAL inventory.sync: Stock synchronization aborted due to schema mismatch",
+  "metadata_payload": {
+    "recent_commit": "f90b221",
+    "deployment_version": "v1.2.8"
+  },
+  "ground_truth": {
+    "expected_cause_keywords": ["UndefinedColumn", "item_sku_v2", "schema mismatch"],
+    "target_service": "inventory-service"
+  }
+}

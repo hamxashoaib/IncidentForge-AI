@@ -1,0 +1,20 @@
+﻿{
+  "scenario_id": "SCN-001",
+  "title": "Order Service Database Pool Starvation",
+  "service": "order-service",
+  "severity": "P1",
+  "error_rate": 0.38,
+  "raw_logs": "[2026-09-24T10:14:02Z] ERROR order_service.db: sqlalchemy.exc.TimeoutError: QueuePool limit of size 5 overflow 10 reached, connection timed out, timeout 30.00\n[2026-09-24T10:14:05Z] CRITICAL order_service.checkout: Failed to acquire database transaction for checkout_id=ord_8923\n[2026-09-24T10:14:09Z] WARN order_service.health: /healthz liveness probe responded with HTTP 503 Service Unavailable",
+  "metadata_payload": {
+    "recent_commit": "e81f9a2",
+    "commit_author": "dev-ops@internal",
+    "deployment_version": "v2.4.1",
+    "active_connections": 15,
+    "pool_max": 5
+  },
+  "ground_truth": {
+    "root_cause": "Deployment v2.4.1 reduced max database pool connections from 20 to 5, leading to starvation under peak checkout traffic.",
+    "target_file": "services/order_service/config.py",
+    "remediation": "Increase POOL_SIZE to 25 and set POOL_TIMEOUT to 10"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "metrics": {
+    "total_scenarios": 5,
+    "rca_accuracy_pct": 100.0,
+    "evidence_grounding_pct": 100.0,
+    "avg_latency_seconds": 0.02
+  },
+  "runs": [
+    {
+      "scenario_id": "SCN-001",
+      "title": "Order Service Database Pool Starvation",
+      "service": "order-service",
+      "severity": "P1",
+      "elapsed_seconds": 0.08,
+      "rca_correct": true,
+      "evidence_grounding_rate": 1.0,
+      "diff_valid": true,
+      "root_cause_summary": "Database QueuePool connection starvation: DB_POOL_SIZE reduced from 25 to 5."
+    },
+    {
+      "scenario_id": "SCN-002",
+      "title": "Auth Service Missing Environment Variable Timeout",
+      "service": "auth-service",
+      "severity": "P1",
+      "elapsed_seconds": 0.01,
+      "rca_correct": true,
+      "evidence_grounding_rate": 1.0,
+      "diff_valid": true,
+      "root_cause_summary": "KeyError on missing 'JWT_VERIFY_TIMEOUT' environment variable in auth-service."
+    },
+    {
+      "scenario_id": "SCN-003",
+      "title": "Payment Service Upstream Gateway 504 Timeout",
+      "service": "payment-service",
+      "severity": "P2",
+      "elapsed_seconds": 0.01,
+      "rca_correct": true,
+      "evidence_grounding_rate": 1.0,
+      "diff_valid": true,
+      "root_cause_summary": "Upstream ReadTimeout from stripe-mock gateway resulting in HTTP 504 Gateway Timeout."
+    },
+    {
+      "scenario_id": "SCN-004",
+      "title": "Inventory Service Schema Drift Column Missing",
+      "service": "inventory-service",
+      "severity": "P1",
+      "elapsed_seconds": 0.01,
+      "rca_correct": true,
+      "evidence_grounding_rate": 1.0,
+      "diff_valid": true,
+      "root_cause_summary": "Schema mismatch: psycopg2.errors.UndefinedColumn 'item_sku_v2' missing from relation inventory_items."
+    },
+    {
+      "scenario_id": "SCN-005",
+      "title": "Notification Service File Descriptor Starvation",
+      "service": "notification-service",
+      "severity": "P2",
+      "elapsed_seconds": 0.01,
+      "rca_correct": true,
+      "evidence_grounding_rate": 1.0,
+      "diff_valid": true,
+      "root_cause_summary": "File descriptor exhaustion: OSError [Errno 24] Too many open files due to unclosed socket handles."
+    }
+  ]
+}
