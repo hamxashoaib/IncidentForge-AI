@@ -1,10 +1,42 @@
-# IncidentForge AI
+# ⚡ IncidentForge AI
 
-An autonomous system that helps engineers investigate server outages, figure out what went wrong, write a code fix, and test that fix in a safe sandbox before asking an engineer to approve it.
+> An autonomous system that helps engineers investigate server outages, figure out what went wrong, write a code fix, and test that fix in a safe sandbox before asking an engineer to approve it.
+
+### 🧰 Built With
+
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python\&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi\&logoColor=white)](https://fastapi.tiangolo.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql\&logoColor=white)](https://www.postgresql.org/)
+[![pgvector](https://img.shields.io/badge/pgvector-Vector%20Search-336791?logo=postgresql\&logoColor=white)](https://github.com/pgvector/pgvector)
+[![LangGraph](https://img.shields.io/badge/LangGraph-Orchestration-1C3C3C?logo=langchain\&logoColor=white)](https://github.com/langchain-ai/langgraph)
+[![Docker](https://img.shields.io/badge/Docker-Sandbox-2496ED?logo=docker\&logoColor=white)](https://www.docker.com/)
+[![Pytest](https://img.shields.io/badge/Pytest-Testing-0A9EDC?logo=pytest\&logoColor=white)](https://pytest.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Frontend-FF4B4B?logo=streamlit\&logoColor=white)](https://streamlit.io/)
 
 ---
 
-## What is IncidentForge AI? (In Simple Words)
+## 📖 Table of Contents
+
+* [💡 What is IncidentForge AI?](#-what-is-incidentforge-ai)
+* [🎯 Why is This Useful?](#-why-is-this-useful)
+* [⚖️ Core Principles](#-core-principles)
+* [🏗️ System Architecture](#-system-architecture)
+* [🔄 How It Works](#-how-it-works-step-by-step)
+* [✨ Key Features](#-key-features)
+* [🛠️ Tech Stack](#-tech-stack)
+* [🧪 Built-In Incident Scenarios](#-built-in-incident-scenarios)
+* [📊 Evaluation Results](#-evaluation-results)
+* [📁 Repository Structure](#-repository-structure)
+* [🚀 How to Set Up and Run](#-how-to-set-up-and-run)
+* [🛡️ Safety and Security Guardrails](#-safety-and-security-guardrails)
+* [📜 License](#-license)
+* [👨‍💻 Author](#-author)
+* [🔗 Connect](#-connect)
+* [⭐ Project](#-project)
+
+---
+
+## 💡 What is IncidentForge AI?
 
 Imagine an online store during a major sale. Suddenly, customers cannot check out and their orders start failing.
 
@@ -29,32 +61,44 @@ This manual process can take 30 to 60 minutes while the company may be losing re
 
 ---
 
-## Why is This Useful?
+## 🎯 Why is This Useful?
 
-* **Faster recovery from downtime:** Instead of spending a long time reading logs, the engineer gets a clear investigation summary and a tested fix.
-* **Less investigation noise:** It filters relevant information from large amounts of logs and highlights the most useful findings.
-* **Safe AI without unsupported claims:** IncidentForge AI cannot directly touch production. It generates a patch, tests it in a safe sandbox, and waits for a human engineer to approve or reject the proposed action.
-
----
-
-## Core Principles
-
-1. **Evidence over Guesses:** Every conclusion must reference a real piece of data, such as `EV-LOG-001` or `EV-GIT-001`. The system does not invent fake confidence percentages.
-
-2. **Two Focused Agents Instead of Eight:** Many AI projects try to use 8 or 10 agents talking to each other, which can add unnecessary complexity. IncidentForge AI keeps it simple:
-
-   * **Investigator:** Reads logs, Git history, and documentation.
-   * **RCA and Fix Planner:** Compares clues, finds the root cause, and writes the code fix.
-
-3. **Real Testing:** We never ask the AI, "Did your fix work?". We run real `pytest` tests on the patched code. Passing tests show that the proposed fix works for the tested scenarios, while failed tests send the fix back for review.
-
-4. **Human in Control:** The AI assists engineers. It does not replace them. Nothing gets deployed without human approval.
+* ⚡ **Faster recovery from downtime:** Instead of spending a long time reading logs, the engineer gets a clear investigation summary and a tested fix.
+* 🔎 **Less investigation noise:** It filters relevant information from large amounts of logs and highlights the most useful findings.
+* 🛡️ **Safe AI without unsupported claims:** IncidentForge AI cannot directly touch production. It generates a patch, tests it in a safe sandbox, and waits for a human engineer to approve or reject the proposed action.
 
 ---
 
-## System Architecture
+## ⚖️ Core Principles
 
-## System Architecture
+### 1. 🔍 Evidence Over Guesses
+
+Every conclusion must reference a real piece of data, such as `EV-LOG-001` or `EV-GIT-001`.
+
+The system does not invent fake confidence percentages.
+
+### 2. 🤖 Two Focused Agents Instead of Eight
+
+Many AI projects try to use 8 or 10 agents talking to each other, which can add unnecessary complexity. IncidentForge AI keeps it simple:
+
+* **Investigator:** Reads logs, Git history, and documentation.
+* **RCA and Fix Planner:** Compares clues, finds the root cause, and writes the code fix.
+
+### 3. 🧪 Real Testing
+
+We never ask the AI, "Did your fix work?"
+
+We run real `pytest` tests on the patched code. Passing tests show that the proposed fix works for the tested scenarios, while failed tests send the fix back for review.
+
+### 4. 👤 Human in Control
+
+The AI assists engineers. It does not replace them.
+
+Nothing gets deployed without human approval.
+
+---
+
+## 🏗️ System Architecture
 
 ```mermaid
 flowchart TD
@@ -84,11 +128,12 @@ flowchart TD
 
 ---
 
-## How It Works: Step by Step
+## 🔄 How It Works: Step by Step
 
 ```mermaid
 sequenceDiagram
     autonumber
+
     actor SRE as Human Engineer
     participant App as Streamlit Cockpit
     participant Graph as LangGraph Orchestrator
@@ -110,70 +155,75 @@ sequenceDiagram
     SRE->>App: Click Approve Hotfix Deployment
 ```
 
-### 1. Alert Ingestion
+### 1. 📥 Alert Ingestion
 
 An error log enters through the FastAPI backend or the built-in simulator and gets saved to PostgreSQL.
 
-### 2. Investigation
+### 2. 🔎 Investigation
 
 The Investigator reads logs, counts error frequencies, checks recent Git commits, and searches technical runbooks.
 
-### 3. Evidence Collection
+### 3. 🧾 Evidence Collection
 
 Each clue gets saved in an evidence ledger with a unique ID, such as `EV-LOG-001`.
 
-### 4. Root Cause Analysis (RCA)
+### 4. 🧠 Root Cause Analysis (RCA)
 
 The Fix Planner compares the available evidence and determines what most likely caused the problem.
 
-### 5. Fix Generation
+### 5. 🛠️ Fix Generation
 
 It creates a standard Git patch showing the exact lines to add, remove, or change.
 
-### 6. Diff Validation
+### 6. ✅ Diff Validation
 
 The system checks that the patch is valid and does not touch protected files such as passwords, `.env`, or Docker files.
 
-### 7. Sandbox Testing
+### 7. 🧪 Sandbox Testing
 
 It copies the code into a temporary workspace, applies the fix, and runs `pytest`.
 
-### 8. Human Review
+### 8. 👨‍💻 Human Review
 
 The engineer views the timeline, evidence, diff, and test results on the Streamlit dashboard, then clicks **Approve** or **Reject**.
 
 ---
 
-## Key Features
+## ✨ Key Features
 
-* **Automated Investigation:** Analyzes logs and identifies error spikes automatically.
-* **Git Commit Tracking:** Checks recent commits to see who changed what and when.
-* **Runbook Search (pgvector):** Uses semantic vector search to find relevant engineering documentation in PostgreSQL.
-* **Evidence Ledger:** Links every hypothesis to verified evidence IDs with zero hallucinated sources.
-* **Standard Git Diffs:** Generates code fixes in the standard unified diff format used by Git.
-* **Isolated Testing:** Runs tests in a temporary sandbox workspace to verify the proposed fix before deployment.
-* **Human Approval Gate:** Keeps human engineers in control of all deployment decisions.
-* **Interactive Cockpit:** Clean Streamlit dashboard with timelines, evidence side-by-side views, a diff viewer, and approval buttons.
-* **Automated Benchmark Suite:** Includes 5 synthetic outage scenarios and an evaluation runner to test speed and accuracy.
-
----
-
-## Tech Stack
-
-* **Backend API:** FastAPI (Python 3.11+)
-* **Database:** PostgreSQL with pgvector for vector search
-* **Workflow Engine:** LangGraph for multi-step state management
-* **Testing and Sandbox:** pytest running in isolated subprocess workspaces
-* **Frontend:** Streamlit for the incident command dashboard
-* **Containerization:** Docker and Docker Compose
+* 🔎 **Automated Investigation:** Analyzes logs and identifies error spikes automatically.
+* 🌿 **Git Commit Tracking:** Checks recent commits to see who changed what and when.
+* 📚 **Runbook Search (pgvector):** Uses semantic vector search to find relevant engineering documentation in PostgreSQL.
+* 🧾 **Evidence Ledger:** Links every hypothesis to verified evidence IDs with zero hallucinated sources.
+* 📝 **Standard Git Diffs:** Generates code fixes in the standard unified diff format used by Git.
+* 🧪 **Isolated Testing:** Runs tests in a temporary sandbox workspace to verify the proposed fix before deployment.
+* 👤 **Human Approval Gate:** Keeps human engineers in control of all deployment decisions.
+* 🖥️ **Interactive Cockpit:** Clean Streamlit dashboard with timelines, evidence side-by-side views, a diff viewer, and approval buttons.
+* 📊 **Automated Benchmark Suite:** Includes 5 synthetic outage scenarios and an evaluation runner to test speed and accuracy.
 
 ---
 
-## Built-In Incident Scenarios
+## 🛠️ Tech Stack
 
-IncidentForge AI comes with a built-in simulator containing 5 realistic server outage scenarios:
+| Layer              | Technology         | Purpose                                                    |
+| ------------------ | ------------------ | ---------------------------------------------------------- |
+| 🐍 Backend API     | **FastAPI**        | Handles API requests and application logic.                |
+| 🗄️ Database       | **PostgreSQL**     | Stores incidents, evidence, and application data.          |
+| 🔎 Vector Search   | **pgvector**       | Stores and searches documentation embeddings.              |
+| 🔄 Workflow Engine | **LangGraph**      | Manages the multi-step investigation workflow and state.   |
+| 🤖 AI Agents       | **Configured LLM** | Handles investigation, reasoning, RCA, and fix planning.   |
+| 🧪 Testing         | **pytest**         | Tests proposed fixes in a deterministic way.               |
+| 🐳 Sandbox         | **Docker**         | Provides an isolated environment for testing code changes. |
+| 🌿 Version Control | **Git / GitHub**   | Used to inspect commits and code changes.                  |
+| 🖥️ Frontend       | **Streamlit**      | Provides the incident command dashboard.                   |
 
-### 1. SCN-001: Order Service
+---
+
+## 🧪 Built-In Incident Scenarios
+
+IncidentForge AI comes with a built-in simulator containing 5 realistic server outage scenarios.
+
+### 🔴 SCN-001: Order Service
 
 **Problem:** Database Connection Pool Starvation
 
@@ -181,7 +231,7 @@ IncidentForge AI comes with a built-in simulator containing 5 realistic server o
 * **Root Cause:** A recent commit reduced the connection pool size from 25 to 5.
 * **Fix:** Increases `POOL_SIZE` back to 25 and `MAX_OVERFLOW` to 10.
 
-### 2. SCN-002: Auth Service
+### 🟠 SCN-002: Auth Service
 
 **Problem:** Missing Environment Variable
 
@@ -189,7 +239,7 @@ IncidentForge AI comes with a built-in simulator containing 5 realistic server o
 * **Root Cause:** Code was deployed without providing a default timeout value.
 * **Fix:** Safely defaults to `os.environ.get("JWT_VERIFY_TIMEOUT", 10.0)`.
 
-### 3. SCN-003: Payment Service
+### 🟡 SCN-003: Payment Service
 
 **Problem:** Gateway 504 Timeout
 
@@ -197,7 +247,7 @@ IncidentForge AI comes with a built-in simulator containing 5 realistic server o
 * **Root Cause:** The upstream gateway took longer than the fixed 5-second timeout.
 * **Fix:** Adjusts the client timeout limit to 15 seconds.
 
-### 4. SCN-004: Inventory Service
+### 🔵 SCN-004: Inventory Service
 
 **Problem:** Schema Drift and Missing Column
 
@@ -205,7 +255,7 @@ IncidentForge AI comes with a built-in simulator containing 5 realistic server o
 * **Root Cause:** Code was deployed before the required database migration.
 * **Fix:** Points the code back to the active `item_sku` column until the migration is applied.
 
-### 5. SCN-005: Notification Service
+### 🟣 SCN-005: Notification Service
 
 **Problem:** File Descriptor Leak
 
@@ -215,7 +265,7 @@ IncidentForge AI comes with a built-in simulator containing 5 realistic server o
 
 ---
 
-## Evaluation Results
+## 📊 Evaluation Results
 
 You can run the benchmark suite with:
 
@@ -225,13 +275,13 @@ python -m evaluation.run
 
 Here are the measured results across all 5 test scenarios:
 
-| **Metric**                             | **Target** |                             **Measured Result** |
-| -------------------------------------- | ---------: | ----------------------------------------------: |
-| **Root Cause Analysis (RCA) Accuracy** |      ≥ 85% |       **100.0%** (5 out of 5 scenarios correct) |
-| **Evidence Grounding Precision**       |       100% |        **100.0%** (0 hallucinated evidence IDs) |
-| **Pre-Flight Diff Validation Rate**    |      ≥ 90% |      **100.0%** (All diffs syntactically valid) |
-| **Reproduction Test Pass Rate**        |       100% | **100.0%** (`pytest` passed cleanly in sandbox) |
-| **Average Pipeline Latency**           |     ≤ 5.0s |        **0.02s** (Fast deterministic execution) |
+| Metric                                    | Target |                                 Measured Result |
+| ----------------------------------------- | -----: | ----------------------------------------------: |
+| **🎯 Root Cause Analysis (RCA) Accuracy** |  ≥ 85% |       **100.0%** (5 out of 5 scenarios correct) |
+| **🔎 Evidence Grounding Precision**       |   100% |        **100.0%** (0 hallucinated evidence IDs) |
+| **🛡️ Pre-Flight Diff Validation Rate**   |  ≥ 90% |      **100.0%** (All diffs syntactically valid) |
+| **🧪 Reproduction Test Pass Rate**        |   100% | **100.0%** (`pytest` passed cleanly in sandbox) |
+| **⚡ Average Pipeline Latency**            | ≤ 5.0s |        **0.02s** (Fast deterministic execution) |
 
 The benchmark runner calculates these metrics from the available test scenarios.
 
@@ -249,7 +299,7 @@ evaluation/benchmark_results.json
 
 ---
 
-## Repository Structure
+## 📁 Repository Structure
 
 ```text
 IncidentForge-AI/
@@ -305,15 +355,15 @@ IncidentForge-AI/
 
 ---
 
-## How to Set Up and Run
+## 🚀 How to Set Up and Run
 
-### Prerequisites
+### 📋 Prerequisites
 
-* Python 3.11 or newer
-* Docker Desktop installed and running
-* Git
+* 🐍 Python 3.11 or newer
+* 🐳 Docker Desktop installed and running
+* 🌿 Git
 
-### Step 1: Clone the Project and Create a Virtual Environment
+### 1️⃣ Clone the Project and Create a Virtual Environment
 
 #### Windows PowerShell
 
@@ -339,13 +389,13 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Step 2: Configure Environment Variables
+### 2️⃣ Configure Environment Variables
 
 Create a local `.env` file from `.env.example` and add the required settings and API credentials.
 
 Do not commit your `.env` file or API keys to GitHub.
 
-### Step 3: Start the Database Container
+### 3️⃣ Start the Database Container
 
 Make sure Docker Desktop is open and the Docker engine is running.
 
@@ -363,7 +413,7 @@ docker ps
 
 You should see the IncidentForge database container running on port `5432`.
 
-### Step 4: Start the Backend API
+### 4️⃣ Start the Backend API
 
 Open your first terminal and run:
 
@@ -371,10 +421,10 @@ Open your first terminal and run:
 uvicorn backend.main:app --reload --port 8000
 ```
 
-* API Docs: `http://127.0.0.1:8000/docs`
-* Health Check: `http://127.0.0.1:8000/health`
+* 📚 **API Docs:** `http://127.0.0.1:8000/docs`
+* ❤️ **Health Check:** `http://127.0.0.1:8000/health`
 
-### Step 5: Open the Streamlit Dashboard
+### 5️⃣ Open the Streamlit Dashboard
 
 Open a second terminal, activate the virtual environment, and run:
 
@@ -393,7 +443,7 @@ From the dashboard:
 3. Review the proposed fix.
 4. Click **Approve Hotfix Deployment** to test the human approval workflow.
 
-### Step 6: Run the Benchmark Suite
+### 6️⃣ Run the Benchmark Suite
 
 Open a third terminal, activate the virtual environment, and run:
 
@@ -411,13 +461,13 @@ Refresh the Streamlit browser tab to view the latest evaluation results.
 
 ---
 
-## Safety and Security Guardrails
+## 🛡️ Safety and Security Guardrails
 
-### 1. Read-Only Investigation
+### 🔒 1. Read-Only Investigation
 
 The Investigator Agent only reads logs, commits, and documentation. It does not have unrestricted terminal or write access.
 
-### 2. Blocked Sensitive Files
+### 🚫 2. Blocked Sensitive Files
 
 The diff validator automatically rejects patches that try to modify protected files such as:
 
@@ -428,17 +478,17 @@ docker-compose.yml
 .git/
 ```
 
-### 3. No Direct Production Access
+### 🧪 3. No Direct Production Access
 
 Code fixes are applied and tested only inside temporary sandbox workspaces.
 
-### 4. Mandatory Human Approval
+### 👤 4. Mandatory Human Approval
 
 No fix can be marked ready for production without a human engineer reviewing and approving it first.
 
 ---
 
-## License
+## 📜 License
 
 Distributed under the MIT License.
 
@@ -449,7 +499,7 @@ Distributed under the MIT License.
 **Hamza Shoaib**
 *AI & ML Engineer & AI Automation Specialist*
 
-## Connect
+## 🔗 Connect
 
 * 🌐 **Portfolio:** [hamzashoaib.dev](https://hamzashoaib.dev/)
 * 💼 **LinkedIn:** [ch-hamza-shoaib](https://linkedin.com/in/ch-hamza-shoaib)
